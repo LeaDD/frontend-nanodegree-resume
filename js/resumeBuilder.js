@@ -12,11 +12,11 @@ resumeBuilder.js - Objects to hold detail data and functions to display it.
         "twitter": "darth_midlo",
         "location": "Midlothian, TX, US"
         }],
-    "picURL": "images/blackfyre_2.jpeg",
-    "welcome": "Hi, welcome to my page",
+    "welcomeMessage": "Hi, my name is David Deal and I am a Texas based free lance web developer building customized, dynamic and fully responsive sites.",
     "skills": [
         "HTML", "CSS", "Javascript", "jQuery", "SQL Server", "VBA"
-    ]
+    ],
+    "biopic": "images/blackfyre_2.jpeg"
  };
 
 var work = {
@@ -50,14 +50,18 @@ var work = {
         {
             "name": "Navarro College",
             "location": "Waxahachie, TX",
-            "years": "1989",
+            "dates": "1989",
             "major": "Computer Science",
+            "degree":"",
+            "url":""
         },
         {
             "name": "The University of Texas at Arlington",
             "location": "Arlington, TX",
             "years": "1989/1991",
             "major": "Computer Science",
+            "degree":"",
+            "url":""
         }
     ]
  };
@@ -68,20 +72,22 @@ var projects = {
             "title": "Project Portfolio",
             "dates": "2016",
             "description": "Simple site to describe and link to my front end development projects.",
-            "images": ["images/blackfyre_2.jpeg"],
+            "images": ["images/ddeal-info-1.jpg","images/ddeal-info-stylized.jpg"],
             "projURL": "https://github.com/LeaDD/portfolio"
         }
     ]
 };
 
 bio.contactsDisplay = function() {
-    for(var i = 0; i < bio.contacts.length; i++) {
-        for(contact in bio.contacts[i]) {
-            var formattedContact = HTMLcontactGeneric.replace("%contact%", contact);
-            formattedContact = formattedContact.replace("%data%", bio.contacts[i][contact]);
-            $("#topContacts:last").append(formattedContact);
-            $("#footerContacts:last").append(formattedContact);
-        };
+    if (bio.contacts.length > 0) {
+        for(var i = 0; i < bio.contacts.length; i++) {
+            for(contact in bio.contacts[i]) {
+                var formattedContact = HTMLcontactGeneric.replace("%contact%", contact);
+                formattedContact = formattedContact.replace("%data%", bio.contacts[i][contact]);
+                $("#topContacts:last").append(formattedContact);
+                $("#footerContacts:last").append(formattedContact);
+            };
+        }
     }
 };
 
@@ -101,10 +107,10 @@ bio.display = function() {
     var formattedRole = HTMLheaderRole.replace("%data%",bio.role);
     $("#header").append(formattedName + " " + formattedRole);
 
-    var formattedBioPic = HTMLbioPic.replace("%data%",bio.picURL);
+    var formattedBioPic = HTMLbioPic.replace("%data%",bio.biopic);
     $("#header").append(formattedBioPic);
 
-    var formattedWelcome = HTMLWelcomeMsg.replace("%data%",bio.welcome);
+    var formattedWelcome = HTMLWelcomeMsg.replace("%data%",bio.welcomeMessage);
     $("#header").append(formattedWelcome);
 
     bio.skillsDisplay();
@@ -134,7 +140,7 @@ education.display = function() {
         for(var i = 0; i < education.schools.length; i++) {
             $("#education").append(HTMLschoolStart);
             var formattedSchName = HTMLschoolName.replace("%data%",education.schools[i].name);
-            var formattedSchDates = HTMLschoolDates.replace("%data%",education.schools[i].years);
+            var formattedSchDates = HTMLschoolDates.replace("%data%",education.schools[i].dates);
             var formattedSchLocation = HTMLschoolLocation.replace("%data%",education.schools[i].location);
 
             $(".education-entry:last").append(formattedSchName);
@@ -158,7 +164,7 @@ projects.display = function() {
                 //Iterate over images for each project
                 if(projects.projects[i].images.length > 0) {
                     for(var j = 0; j < projects.projects[i].images.length; j++) {
-                        var formattedProjImage = HTMLprojectImage.replace("%data%",projects.projects[i].images);
+                        var formattedProjImage = HTMLprojectImage.replace("%data%",projects.projects[i].images[j]);
                         $(".project-entry:last").append(formattedProjImage);
                     };
                 }
