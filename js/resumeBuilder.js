@@ -2,7 +2,9 @@
 resumeBuilder.js - Objects to hold detail data and functions to display it.
  */
 
- var bio = {
+/*Bio, work, education and projects objects contain the detail data that will be displayed in the corresponding sections of the resume.*/
+
+var bio = {
     "name": "David Deal",
     "role": "Web Developer",
     "contacts": [{
@@ -11,17 +13,16 @@ resumeBuilder.js - Objects to hold detail data and functions to display it.
         "github": "https://github.com/LeaDD/",
         "twitter": "darth_midlo",
         "location": "Midlothian, TX, US"
-        }],
+    }],
     "welcomeMessage": "Hi, my name is David Deal and I am a Texas based free lance web developer building customized, dynamic and fully responsive sites.",
     "skills": [
         "HTML", "CSS", "Javascript", "jQuery", "SQL Server", "VBA"
     ],
     "biopic": "images/blackfyre_2.jpeg"
- };
+};
 
 var work = {
-    "jobs": [
-        {
+    "jobs": [{
             "employer": "Citibank",
             "title": "Sr BP&A Analyst",
             "dates": "January 2015 - Present",
@@ -43,45 +44,44 @@ var work = {
             "description": "Manage staff of up to 62 employees performing encoding, corrections and receiving functions."
         }
     ]
- };
+};
 
- var education = {
-    "schools": [
-        {
+var education = {
+    "schools": [{
             "name": "Navarro College",
             "location": "Waxahachie, TX",
             "dates": "1989",
-            "major": "Computer Science",
-            "degree":"",
-            "url":""
+            "majors": "Computer Science",
+            "degree": "",
+            "url": ""
         },
         {
             "name": "The University of Texas at Arlington",
             "location": "Arlington, TX",
             "years": "1989/1991",
-            "major": "Computer Science",
-            "degree":"",
-            "url":""
-        }
-    ]
- };
-
-var projects = {
-    "projects": [
-        {
-            "title": "Project Portfolio",
-            "dates": "2016",
-            "description": "Simple site to describe and link to my front end development projects.",
-            "images": ["images/ddeal-info-1.jpg","images/ddeal-info-stylized.jpg"],
-            "projURL": "https://github.com/LeaDD/portfolio"
+            "majors": "Computer Science",
+            "degree": "",
+            "url": ""
         }
     ]
 };
 
+var projects = {
+    "projects": [{
+        "title": "Project Portfolio",
+        "dates": "2016",
+        "description": "Simple site to describe and link to my front end development projects.",
+        "images": ["images/ddeal-info-1.jpg", "images/ddeal-info-stylized.jpg"],
+        "projURL": "https://github.com/LeaDD/portfolio"
+    }]
+};
+
+//Bio functions to display the contacts, skills, etc
 bio.contactsDisplay = function() {
     if (bio.contacts.length > 0) {
-        for(var i = 0; i < bio.contacts.length; i++) {
-            for(contact in bio.contacts[i]) {
+        //Loop through contacts and append to the top and footer contact sections.
+        for (var i = 0; i < bio.contacts.length; i++) {
+            for (contact in bio.contacts[i]) {
                 var formattedContact = HTMLcontactGeneric.replace("%contact%", contact);
                 formattedContact = formattedContact.replace("%data%", bio.contacts[i][contact]);
                 $("#topContacts:last").append(formattedContact);
@@ -94,39 +94,42 @@ bio.contactsDisplay = function() {
 bio.skillsDisplay = function() {
     if (bio.skills.length > 0) {
         $("#header").append(HTMLskillsStart);
-
+        //Loop through skills and append to the skills section.
         for (skill in bio.skills) {
-            var formattedSkill = HTMLskills.replace("%data%",bio.skills[skill]);
+            var formattedSkill = HTMLskills.replace("%data%", bio.skills[skill]);
             $("#skills").append(formattedSkill);
         };
     };
 };
 
+//Display singular info and call previous functions to show skills and contacts.
 bio.display = function() {
-    var formattedName = HTMLheaderName.replace("%data%",bio.name);
-    var formattedRole = HTMLheaderRole.replace("%data%",bio.role);
+    var formattedName = HTMLheaderName.replace("%data%", bio.name);
+    var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
     $("#header").append(formattedName + " " + formattedRole);
 
-    var formattedBioPic = HTMLbioPic.replace("%data%",bio.biopic);
+    var formattedBioPic = HTMLbioPic.replace("%data%", bio.biopic);
     $("#header").append(formattedBioPic);
 
-    var formattedWelcome = HTMLWelcomeMsg.replace("%data%",bio.welcomeMessage);
+    var formattedWelcome = HTMLWelcomeMsg.replace("%data%", bio.welcomeMessage);
     $("#header").append(formattedWelcome);
 
     bio.skillsDisplay();
     bio.contactsDisplay();
 };
 
+//Work function to display detailed employment history.
 work.display = function() {
     if (work.jobs.length > 0) {
+        //Loop through job history then gather and display various data points.
         for (job in work.jobs) {
             //create new div for work experience
             $("#workExperience").append(HTMLworkStart);
             //format job data into predefined tags
             var formattedEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
-            var formattedTitle = HTMLworkTitle.replace("%data%",work.jobs[job].title);
-            var formattedDates = HTMLworkDates.replace("%data%",work.jobs[job].dates);
-            var formattedDescription = HTMLworkDescription.replace("%data%",work.jobs[job].description);
+            var formattedTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
+            var formattedDates = HTMLworkDates.replace("%data%", work.jobs[job].dates);
+            var formattedDescription = HTMLworkDescription.replace("%data%", work.jobs[job].description);
             //concatenate all of the formatted tags
             var formattedWork = formattedEmployer + formattedTitle + formattedDates + formattedDescription;
             //and append to the div
@@ -135,43 +138,47 @@ work.display = function() {
     };
 };
 
+//Education function to display detailed education history.
 education.display = function() {
     if (education.schools.length > 0) {
-        for(var i = 0; i < education.schools.length; i++) {
+        /*Loop through education history then gather and display various data points*/
+        for (var i = 0; i < education.schools.length; i++) {
             $("#education").append(HTMLschoolStart);
-            var formattedSchName = HTMLschoolName.replace("%data%",education.schools[i].name);
-            var formattedSchDates = HTMLschoolDates.replace("%data%",education.schools[i].dates);
-            var formattedSchLocation = HTMLschoolLocation.replace("%data%",education.schools[i].location);
+            var formattedSchName = HTMLschoolName.replace("%data%", education.schools[i].name);
+            var formattedSchDates = HTMLschoolDates.replace("%data%", education.schools[i].dates);
+            var formattedSchLocation = HTMLschoolLocation.replace("%data%", education.schools[i].location);
 
             $(".education-entry:last").append(formattedSchName);
             $(".education-entry:last").append(HTMLschoolDTLOC);
-            $(".education-DTLOC:last").append( formattedSchDates, formattedSchLocation);
+            $(".education-DTLOC:last").append(formattedSchDates, formattedSchLocation);
         }
     }
 };
 
 projects.display = function() {
-    if(projects.projects.length > 0) {
-        for(var i = 0; i < projects.projects.length; i++) {
-                $("#projects").append(HTMLprojectStart);
-                var formattedProjTitle = HTMLprojectTitle.replace("%data%",projects.projects[i].title);
-                formattedProjTitle = formattedProjTitle.replace("%link%",projects.projects[i].projURL);
-                var formattedProjDates = HTMLprojectDates.replace("%data%",projects.projects[i].dates);
-                var formattedProjDesc = HTMLprojectDescription.replace("%data%",projects.projects[i].description)
+    if (projects.projects.length > 0) {
+        /*Loop through projects then gather and display various data points*/
+        for (var i = 0; i < projects.projects.length; i++) {
+            $("#projects").append(HTMLprojectStart);
+            var formattedProjTitle = HTMLprojectTitle.replace("%data%", projects.projects[i].title);
+            formattedProjTitle = formattedProjTitle.replace("%link%", projects.projects[i].projURL);
+            var formattedProjDates = HTMLprojectDates.replace("%data%", projects.projects[i].dates);
+            var formattedProjDesc = HTMLprojectDescription.replace("%data%", projects.projects[i].description)
 
-                var formattedProject = formattedProjTitle + formattedProjDates + formattedProjDesc;
-                $(".project-entry:last").append(formattedProject)
-                //Iterate over images for each project
-                if(projects.projects[i].images.length > 0) {
-                    for(var j = 0; j < projects.projects[i].images.length; j++) {
-                        var formattedProjImage = HTMLprojectImage.replace("%data%",projects.projects[i].images[j]);
-                        $(".project-entry:last").append(formattedProjImage);
-                    };
-                }
+            var formattedProject = formattedProjTitle + formattedProjDates + formattedProjDesc;
+            $(".project-entry:last").append(formattedProject)
+            //Iterate over images for each project
+            if (projects.projects[i].images.length > 0) {
+                for (var j = 0; j < projects.projects[i].images.length; j++) {
+                    var formattedProjImage = HTMLprojectImage.replace("%data%", projects.projects[i].images[j]);
+                    $(".project-entry:last").append(formattedProjImage);
+                };
+            }
         }
     }
 };
 
+//Function used for 'internationalizing' name.
 function inName(name) {
     var names = name.trim().split(" ");
 
@@ -195,4 +202,5 @@ bio.display();
 //Display button to internationalize name
 $("#main").append(internationalizeButton);
 
+//Display map of 'lived and worked' locations
 $("#mapDiv").append(googleMap);
