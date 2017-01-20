@@ -7,13 +7,13 @@ resumeBuilder.js - Objects to hold detail data and functions to display it.
 var bio = {
     "name": "David Deal",
     "role": "Web Developer",
-    "contacts": [{
+    "contacts": {
         "mobile": "212-867-5309",
         "email": "ddeal812@gmail.com",
         "github": "https://github.com/LeaDD/",
         "twitter": "darth_midlo",
         "location": "Midlothian, TX, US"
-    }],
+    },
     "welcomeMessage": "Hi, my name is David Deal and I am a Texas based free lance web developer building customized, dynamic and fully responsive sites.",
     "skills": [
         "HTML", "CSS", "Javascript", "jQuery", "SQL Server", "VBA"
@@ -82,37 +82,8 @@ var projects = {
     }]
 };
 
-//Bio functions to display the contacts, skills, etc
-bio.contactsDisplay = function() {
-    if (bio.contacts.length > 0) {
-        //Loop through contacts and append to the top and footer contact sections.
-        for (var i = 0; i < bio.contacts.length; i++ ) {
-            var formattedMobile = HTMLmobile.replace("%data%", bio.contacts[0].mobile);
-            var formattedEmail = HTMLemail.replace("%data%", bio.contacts[0].email);
-            var formattedTwitter = HTMLtwitter.replace("%data%", bio.contacts[0].twitter);
-            var formattedGithub = HTMLgithub.replace("%data%", bio.contacts[0].github);
-            var formattedLocation = HTMLlocation.replace("%data%", bio.contacts[0].location);
-            //formattedContact = formattedContact.replace("%data%", bio.contacts[i]);
-            var formattedContact = formattedMobile + formattedEmail + formattedTwitter + formattedGithub + formattedLocation;
 
-            $("#topContacts").append(formattedContact);
-            $("#footerContacts").append(formattedContact);
-        }
-    }
-};
-
-bio.skillsDisplay = function() {
-    if (bio.skills.length > 0) {
-        $("#header").append(HTMLskillsStart);
-        //Loop through skills and append to the skills section.
-        for (var i = 0; i < bio.skills.length; i++) {
-            var formattedSkill = HTMLskills.replace("%data%", bio.skills[i]);
-            $("#skills").append(formattedSkill);
-        }
-    }
-};
-
-//Display singular info and call previous functions to show skills and contacts.
+//Bio function displays detailed biographical information.
 bio.display = function() {
     var formattedName = HTMLheaderName.replace("%data%", bio.name);
     var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
@@ -121,11 +92,28 @@ bio.display = function() {
     var formattedBioPic = HTMLbioPic.replace("%data%", bio.biopic);
     $("#header").append(formattedBioPic);
 
-    var formattedWelcome = HTMLWelcomeMsg.replace("%data%", bio.welcomeMessage);
+    var formattedWelcome = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
     $("#header").append(formattedWelcome);
 
-    bio.skillsDisplay();
-    bio.contactsDisplay();
+
+    if (bio.skills.length > 0) {
+        $("#header").append(HTMLskillsStart);
+        //Loop through skills and append to the skills section.
+        for (var i = 0; i < bio.skills.length; i++) {
+            var formattedSkill = HTMLskills.replace("%data%", bio.skills[i]);
+            $("#skills").append(formattedSkill);
+        }
+    }
+
+    var formattedMobile = HTMLmobile.replace("%data%", bio.contacts.mobile);
+    var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email);
+    var formattedTwitter = HTMLtwitter.replace("%data%", bio.contacts.twitter);
+    var formattedGithub = HTMLgithub.replace("%data%", bio.contacts.github);
+    var formattedLocation = HTMLlocation.replace("%data%", bio.contacts.location);
+    //formattedContact = formattedContact.replace("%data%", bio.contacts[i]);
+    var formattedContact = formattedMobile + formattedEmail + formattedTwitter + formattedGithub + formattedLocation;
+
+    $("#topContacts, #footerContacts").append(formattedContact);
 };
 
 //Work function to display detailed employment history.
