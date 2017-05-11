@@ -207,11 +207,6 @@ function inName(name) {
     return formattedFirst + " " + formattedLast;
 }
 
-//get object keys from array
-//*************************************
-//console.log(Object.keys(work.jobs[0]));
-//*************************************
-
 //Call functions by section to display resume data
 work.display();
 projects.display();
